@@ -1,0 +1,70 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+//        classpath 'gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.19.2'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '1.5.9.RELEASE'
+    id 'java'
+}
+//apply plugin: 'com.palantir.docker'
+apply plugin: 'java'
+//apply plugin: 'idea'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'displayTracks'
+    version = '0.0.1-SNAPSHOT'
+}
+war{
+    baseName = 'displayTracks'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+//task buildDocker(type: Docker, dependsOn: build, group: "docker") {
+//    dockerfile = file('src/main/docker/Dockerfile')
+//    doFirst {
+//        copy {
+//            from jar
+//            into stageDir
+//        }
+//    }
+//}
+// https://mvnrepository.com/artifact/net.sourceforge.nekohtml/nekohtml
+
+dependencies {
+    compile group: 'com.github.penggle', name: 'kaptcha', version: '2.3.2'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    //compile('org.springframework.session:spring-session')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    // https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf
+//    compile group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.15.RELEASE'
+
+    //compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.4', classifier: 'jdk15'
+
+    runtime('org.springframework.boot:spring-boot-devtools')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+
+    compile('org.postgresql:postgresql')
+    runtime('org.postgresql:postgresql')
+}
